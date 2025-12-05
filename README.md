@@ -10,3 +10,4 @@
 
 ## Progress
 - [x] Day 1: Setup + CRUD operations
+- [x] Day 2: JWT Auth and Configulation
