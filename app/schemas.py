@@ -3,13 +3,29 @@ from typing import Optional
 from datetime import datetime
 
 
-
-
-# Pydantic Model -> DTO
-class PostCreate(BaseModel):
+class PostBase(BaseModel):
     title:str
     content: str
     published : bool = True ## เซต default เป็น true ถ้าหน้าบ้านไม่ได้มีการกำหนดค่ามาให้
+
+# Pydantic Model -> DTO
+class PostCreate(PostBase):
+    pass
+
+class UserOut(BaseModel):
+    id : int
+    email: EmailStr
+    created_at :datetime
+
+class Post(PostBase):
+    id: int
+    created_at: datetime
+    owner_id : int
+    owner : UserOut
+
+    class Config:
+        from_attributes = True
+
 
 ## Pydantic Patch: PostUpdate
 class PostUpdate(BaseModel):
@@ -23,7 +39,7 @@ class PostPut(BaseModel):
 
 
 ## Pydantic Response
-class PostResponse(PostCreate):
+class PostResponse(PostBase):
     id:int
     created_at :datetime
 
